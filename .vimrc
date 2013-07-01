@@ -47,8 +47,8 @@ vnoremap '' <esc>`<i'<esc>`>la'<esc>
 nnoremap <silent> // :call AckSearchTerm()<cr>n
 
 "Copy to a file
-map <leader>y "fy:new ~/.vim/paste.txt<cr>:%d<cr>:$put f<cr>:x<cr>
-map <leader>p :r ~/.vim/paste.txt<cr>
+map <leader>y "fy:new ~/.vim/.paste<cr>:%d<cr>:$put f<cr>:x<cr>
+map <leader>p :r ~/.vim/.paste<cr>
 
 "Makes f and t work across multiple lines
 nmap <silent> f :call FindChar(0, 0, 0)<cr>
