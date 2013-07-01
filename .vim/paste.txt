@@ -1,0 +1,13 @@
+
+    ## Certify your review screen
+    <div id="certify" class="#if($errors.size()!=1)hidden#end">
+      <div id="certifyError">$util.localize('tablet_war_Pleaseagree_fffff9b3')</div> ## Please agree to the statement below in order to submit your review.
+      #certifyTerms()
+      <div id="certifyYes" class="pushButton min" onclick="${ur}.certifyClick(true);" #touchable()>
+        $util.localize('tablet_I_Agree_fffff619') ## I Agree
+      </div>
+      <div id="certifyNo" class="fakelink" onclick="${ur}.certifyClick(false);" #touchable()>
+        $util.localize('mobile_review_us_button3_ffffeb56') ## No thanks
+      </div>
+    </div>
+  </form>
