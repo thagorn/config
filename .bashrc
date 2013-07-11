@@ -37,10 +37,13 @@ function ack {
 }
 
 #Set up command line
-HOST_COLOR=32 #Green (31 is red)
-PS1_BASE='[\[\033[01;${HOST_COLOR}m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]]'
-#PS1_TMUX='$(tmux set-environment TRTOP $TRTOP)'
-PS1="$PS1_TMUX\n$PS1_BASE\n\W\$ "
+function EXT_COLOR () { echo -ne "\[\033[38;5;$1m\]"; }
+HOST_COLOR="`EXT_COLOR 28`" #Green (31 is red)
+DIR_COLOR="`EXT_COLOR 18`"
+BLCK="`EXT_COLOR 0`" #Green (31 is red)
+PS1_LN1="[${HOST_COLOR}\u@\h${BLCK}:${DIR_COLOR}\w${BLCK}]"
+PS1_LN2="\W\$ "
+PS1="\n$PS1_LN1\n$PS1_LN2"
 
 #Tripadvisor specific stuff
 export SVN_EDITOR=/usr/bin/vim

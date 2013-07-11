@@ -1,2 +1,8 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =0
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/root/.vim/bundle/vim-velocity'
+let g:netrw_dirhist_2='/root/.vim/bundle/vim-velocity/indent'
+let g:netrw_dirhist_3='/root/.vim/bundle/vim-velocity'
+let g:netrw_dirhist_4='/root/.vim/bundle/vim-velocity/snippets'
+let g:netrw_dirhist_5='/root/.vim/bundle/vim-velocity'
+let g:netrw_dirhist_6='/root/.vim'
