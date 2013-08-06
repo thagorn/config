@@ -5,10 +5,12 @@
 " -----------------------------------------------------------------------------------------------------------------
 " Basic Setup
 " -----------------------------------------------------------------------------------------------------------------
-syntax on       "Syntax highlighting
-set ruler       "Show line/column number bottom right
-set showcmd     "Show partial commands bottom right
-set scrolloff=5 "lines between cursor and edge of screen when scrolling
+syntax on               "Syntax highlighting
+set ruler               "Show line/column number bottom right
+set showcmd             "Show partial commands bottom right
+set scrolloff=5         "lines between cursor and edge of screen when scrolling
+set laststatus=2        "Show statusline
+set display+=lastline   "If a line is clipped off by bottom of window show as much of it as possible
 
 "Title support with tmux
 if $TMUX != ""
@@ -51,6 +53,9 @@ endif
 set timeoutlen=250    "Stop looking for a keymap after 1/4 of a second (default 1)
 let mapleader = ","   "Replace instances of  <leader> with ,
 
+"Make Y behave like C and D
+nmap Y y$
+
 "Indent/Dedent from mark 'a' to current line
 noremap + mb >'a 'b
 noremap _ mb <'a 'b
@@ -89,14 +94,14 @@ map <leader>y "fy:new ~/.vim/.paste<cr>:%d<cr>:$put f<cr>:x<cr>
 map <leader>p :r ~/.vim/.paste<cr>
 
 "Makes f and t work across multiple lines
-nmap <silent> f :call FindChar(0, 0, 0)<cr>
-omap <silent> f :call FindChar(0, 1, 0)<cr>
-nmap <silent> F :call FindChar(1, 0, 0)<cr>
-omap <silent> F :call FindChar(1, 1, 1)<cr>
-nmap <silent> t :call FindChar(0, 0, 1)<cr>
-omap <silent> t :call FindChar(0, 0, 0)<cr>
-nmap <silent> T :call FindChar(1, 1, 0)<cr>
-omap <silent> T :call FindChar(1, 1, 0)<cr>
+"nmap <silent> f :call FindChar(0, 0, 0)<cr>
+"omap <silent> f :call FindChar(0, 1, 0)<cr>
+"nmap <silent> F :call FindChar(1, 0, 0)<cr>
+"omap <silent> F :call FindChar(1, 1, 1)<cr>
+"nmap <silent> t :call FindChar(0, 0, 1)<cr>
+"omap <silent> t :call FindChar(0, 0, 0)<cr>
+"nmap <silent> T :call FindChar(1, 1, 0)<cr>
+"omap <silent> T :call FindChar(1, 1, 0)<cr>
 
 "Disable arrow keys
 map <up> <nop>
@@ -122,19 +127,19 @@ autocmd FileType make set noet                        "Make files expect <Tab> c
 "Auto make when writing
 if $TRTOP != ""
   autocmd BufWritePost *.vm silent !$TRTOP/scripts/tweak flush velocity >/dev/null 2>&1 &
-  if expand("%:p") =~ 'site/\(js3\|css2\)/mobile'
-    autocmd BufWritePost *.js silent !make -C $TRTOP/site/js3/mobile >/dev/null 2>&1  &
-    autocmd BufWritePost *.css silent !make -C $TRTOP/site/css2/mobile >/dev/null 2>&1 &
-    autocmd BufWritePost *.less silent !make -C $TRTOP/site/css2/mobile >/dev/null 2>&1 &
-  elseif expand("%:p") =~ 'site/\(js3\|css2\)/tablet'
-    autocmd BufWritePost *.js silent !make -C $TRTOP/site/js3/tablet >/dev/null 2>&1  &
-    autocmd BufWritePost *.css silent !make -C $TRTOP/site/css2/tablet >/dev/null 2>&1 &
-    autocmd BufWritePost *.less silent !make -C $TRTOP/site/css2/tablet >/dev/null 2>&1 &
-  else
+"  if expand("%:p") =~ 'site/\(js3\|css2\)/mobile'
+"    autocmd BufWritePost *.js silent !make -C $TRTOP/site/js3/mobile >/dev/null 2>&1  &
+"    autocmd BufWritePost *.css silent !make -C $TRTOP/site/css2/mobile >/dev/null 2>&1 &
+"    autocmd BufWritePost *.less silent !make -C $TRTOP/site/css2/mobile >/dev/null 2>&1 &
+"  elseif expand("%:p") =~ 'site/\(js3\|css2\)/tablet'
+"    autocmd BufWritePost *.js silent !make -C $TRTOP/site/js3/tablet >/dev/null 2>&1  &
+"    autocmd BufWritePost *.css silent !make -C $TRTOP/site/css2/tablet >/dev/null 2>&1 &
+"    autocmd BufWritePost *.less silent !make -C $TRTOP/site/css2/tablet >/dev/null 2>&1 &
+"  else
     autocmd BufWritePost *.js silent !make -C $TRTOP/site/js3 >/dev/null 2>&1  &
     autocmd BufWritePost *.css silent !make -C $TRTOP/site/css2 >/dev/null 2>&1 &
     autocmd BufWritePost *.less silent !make -C $TRTOP/site/css2 >/dev/null 2>&1 &
-  endif
+"  endif
 endif
 
 " -----------------------------------------------------------------------------------------------------------------
@@ -145,6 +150,8 @@ endif
 "   https://github.com/tpope/vim-pathogen
 "Tells pathogen to open other packages
 execute pathogen#infect()
+call pathogen#helptags()
+
 filetype plugin indent on "Allows plugins to control indent settings
                           "   ... but don't allow them to automatically add comments
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
@@ -160,11 +167,28 @@ let g:vitality_always_assume_iterm = 1 "Tells vitality I'm in iTerm2 even if ssh
 let g:multi_cursor_exit_from_visual_mode = 0  "<Esc> exits visual mode, not multiple cursors
 let g:multi_cursor_exit_from_insert_mode = 0  "<Esc> exits insert mode, not multiple cursors
 
+" Vim Surround
+"   Creates a set of commands for manipulating surround characters (html tags, quotes, parens)
+"   https://github.com/tpope/vim-surround
+
+" Vim Repeat
+"   Allows other plugins to use . to repeat their functions
+"   https://github.com/tpope/vim-repeat
+
+" Improved ft
+"   Allows ft to work across multiple lines
+"   https://github.com/chrisbra/improvedft
+
+" Python Mode
+"   Adds linting, auto-folding etc to python files
+"   https://github.com/klen/python-mode
+let g:pymode_lint_checker = "pyflakes,mccabe"   "Python linters to run
+let g:pymode_folding = 1                        "Enable python folding
+
 " Velocity
 "   Gives velocity syntax support to vim
 "   https://github.com/lepture/vim-velocity
 autocmd BufRead,BufNewFile *.vm,*.html,*.htm,*.shtml set filetype=velocity  "Maybe necessary?
-
 
 " Lucius 
 "   Colorscheme
@@ -196,7 +220,8 @@ fun! FindChar(back, inclusive, exclusive)
   if a:back
     let flag = 'Wb'
   endif
-  if search('\V' . nr2char(getchar()), flag)
+  let c = getchar()
+  if search('\V' . nr2char(c), flag)
     if a:inclusive
       norm! l
     endif

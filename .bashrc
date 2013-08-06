@@ -38,9 +38,10 @@ function ack {
 
 #Set up command line
 function EXT_COLOR () { echo -ne "\[\033[38;5;$1m\]"; }
-HOST_COLOR="`EXT_COLOR 28`" #Green (31 is red)
-DIR_COLOR="`EXT_COLOR 18`"
-BLCK="`EXT_COLOR 0`" #Green (31 is red)
+HOST_COLOR="`EXT_COLOR 28`"     #Green
+#HOST_COLOR="`EXT_COLOR 160`"    #Red
+DIR_COLOR="`EXT_COLOR 18`"      #Blue
+BLCK="`EXT_COLOR 0`"            #Black 
 PS1_LN1="[${HOST_COLOR}\u@\h${BLCK}:${DIR_COLOR}\w${BLCK}]"
 PS1_LN2="\W\$ "
 PS1="\n$PS1_LN1\n$PS1_LN2"
@@ -79,6 +80,7 @@ function newtrtopenv {
     export JS="$TRTOP/site/js3/src/tablet/redesign"
     export CSS="$TRTOP/site/css2/tablet/redesign"
     export VELOCITY="$TRTOP/site/velocity_redesign/tablet/redesign"
+    export BASE="$TRTOP/site/css2/mobile/base.less"
 }
 newtrtopenv
 export PROMPT_COMMAND="findtrtop; $PROMPT_COMMAND"
