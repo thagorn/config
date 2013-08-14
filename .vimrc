@@ -27,6 +27,9 @@ set softtabstop=4   "Number of spaces for <Backspace> to delete
 set autoindent      "Maintain level of indent currently at
 set smartindent     "Guess when to create a deeper indent
 
+"Folding
+set foldmethod=syntax "Create folds based on code syntax
+
 "Line numbers
 set number          "Show dark grey line numbers
 :highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE
@@ -76,7 +79,7 @@ nnoremap N Nzz
 nnoremap n nzz
 
 "Copy/paste out of vim cleanly
-nmap <silent> <leader>v :set smartindent! \| set autoindent! \| setl smartindent< \| setl autoindent<<cr>
+nmap <silent> <leader>v :set paste!<cr>
 nmap <silent> <leader>c :set number!<cr>
 
 "Space bar centers screen and highlights cursor
@@ -119,6 +122,7 @@ imap <right> <nop>
 "Syntax
 autocmd BufRead,BufNewFile *.less set filetype=css    "Pretend less files are css
 autocmd BufRead,BufNewFile *.salsa set filetype=java  "Pretend salsa files are java
+let html_no_rendering=1                               "Don't underline text between <a> tags, etc
 
 "Tabbing
 autocmd FileType velocity,vim set ts=2 sw=2 sts=2     "Velocity/vim files have 2 space tabs
@@ -189,6 +193,7 @@ let g:pymode_folding = 1                        "Enable python folding
 "   Gives velocity syntax support to vim
 "   https://github.com/lepture/vim-velocity
 autocmd BufRead,BufNewFile *.vm,*.html,*.htm,*.shtml set filetype=velocity  "Maybe necessary?
+hi link velocityVar Special                                                 "Prefer this coloring for vars
 
 " Lucius 
 "   Colorscheme
