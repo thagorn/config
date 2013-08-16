@@ -195,6 +195,11 @@ let g:pymode_folding = 1                        "Enable python folding
 autocmd BufRead,BufNewFile *.vm,*.html,*.htm,*.shtml set filetype=velocity  "Maybe necessary?
 hi link velocityVar Special                                                 "Prefer this coloring for vars
 
+" Dustjs
+"   Gives dust syntax support to vim
+"   https://github.com/jimmyhchan/dustjs.vim
+let g:surround_{char2nr('d')} = "{\r}"    "Add {} as surround characters for Vim Surround
+
 " Lucius 
 "   Colorscheme
 "   https://github.com/jonathanfilip/vim-lucius
