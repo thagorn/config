@@ -125,12 +125,13 @@ autocmd BufRead,BufNewFile *.salsa set filetype=java  "Pretend salsa files are j
 let html_no_rendering=1                               "Don't underline text between <a> tags, etc
 
 "Tabbing
-autocmd FileType velocity,vim set ts=2 sw=2 sts=2     "Velocity/vim files have 2 space tabs
-autocmd FileType make set noet                        "Make files expect <Tab> characters not spaces
+autocmd FileType velocity,vim,dustjs set ts=2 sw=2 sts=2    "Velocity/vim/dust files have 2 space tabs
+autocmd FileType make set noet                              "Make files expect <Tab> characters not spaces
 
 "Auto make when writing
 if $TRTOP != ""
   autocmd BufWritePost *.vm silent !$TRTOP/scripts/tweak flush velocity >/dev/null 2>&1 &
+  autocmd BufWritePost *.dust silent !$TRTOP/scripts/tweak flush dust >/dev/null 2>&1 &
 "  if expand("%:p") =~ 'site/\(js3\|css2\)/mobile'
 "    autocmd BufWritePost *.js silent !make -C $TRTOP/site/js3/mobile >/dev/null 2>&1  &
 "    autocmd BufWritePost *.css silent !make -C $TRTOP/site/css2/mobile >/dev/null 2>&1 &

@@ -1,3 +1,4 @@
 --type-set=velocity=.vm
 --type-set=less=.less
 --type-set=ini=.ini
+--type-set=dust=.dust

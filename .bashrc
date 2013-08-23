@@ -80,6 +80,7 @@ function newtrtopenv {
     export JS="$TRTOP/site/js3/src/tablet/redesign"
     export CSS="$TRTOP/site/css2/tablet/redesign"
     export VELOCITY="$TRTOP/site/velocity_redesign/tablet/redesign"
+    export DUST="$TRTOP/site/dust/src/tablet"
     export BASE="$TRTOP/site/css2/mobile/base.less"
 }
 newtrtopenv
