@@ -2,3 +2,4 @@
 --type-set=less=.less
 --type-set=ini=.ini
 --type-set=dust=.dust
+--ignore-file=match:/-(gen|c)\.js$/

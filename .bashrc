@@ -7,11 +7,15 @@ alias cp="cp -i"
 alias mv="mv -i"
 alias rm="rm -i"
 #Add color and /s to directory names
-alias ls="ls -aFG"
+alias ls="ls -aFG --color"
 #Silence displaying every action
 alias make="make -s"
+#Edit svn ignore settings
+alias svnignore="svn propedit svn:ignore ."
+#Make vim the default editor
+export EDITOR=vim
 
-export JAVA_HOME=/usr/jdk1.7.0_03 
+export JAVA_HOME=/usr/lib/jvm/java-7-oracle/
 export PATH=$PATH:$JAVA_HOME/bin 
 
 export FIGNORE=.svn

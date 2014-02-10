@@ -85,26 +85,12 @@ nmap <silent> <leader>c :set number!<cr>
 "Space bar centers screen and highlights cursor
 nnoremap <silent> <space> zz:set cursorline! cursorcolumn!<cr>
 
-"Double quote in visual mode will quote around the selected text
-vnoremap "" <esc>`<i"<esc>`>la"<esc>
-vnoremap '' <esc>`<i'<esc>`>la'<esc>
-
 "Double // will search for the last term used in Ack search (requires a bash function in ~/.bashrc)
 nnoremap <silent> // :call AckSearchTerm()<cr>n
 
 "Copy/Paste across vim sessions
 map <leader>y "fy:new ~/.vim/.paste<cr>:%d<cr>:$put f<cr>:x<cr>
 map <leader>p :r ~/.vim/.paste<cr>
-
-"Makes f and t work across multiple lines
-"nmap <silent> f :call FindChar(0, 0, 0)<cr>
-"omap <silent> f :call FindChar(0, 1, 0)<cr>
-"nmap <silent> F :call FindChar(1, 0, 0)<cr>
-"omap <silent> F :call FindChar(1, 1, 1)<cr>
-"nmap <silent> t :call FindChar(0, 0, 1)<cr>
-"omap <silent> t :call FindChar(0, 0, 0)<cr>
-"nmap <silent> T :call FindChar(1, 1, 0)<cr>
-"omap <silent> T :call FindChar(1, 1, 0)<cr>
 
 "Disable arrow keys
 map <up> <nop>
@@ -132,19 +118,10 @@ autocmd FileType make set noet                              "Make files expect <
 if $TRTOP != ""
   autocmd BufWritePost *.vm silent !$TRTOP/scripts/tweak flush velocity >/dev/null 2>&1 &
   autocmd BufWritePost *.dust silent !$TRTOP/scripts/tweak flush dust >/dev/null 2>&1 &
-"  if expand("%:p") =~ 'site/\(js3\|css2\)/mobile'
-"    autocmd BufWritePost *.js silent !make -C $TRTOP/site/js3/mobile >/dev/null 2>&1  &
-"    autocmd BufWritePost *.css silent !make -C $TRTOP/site/css2/mobile >/dev/null 2>&1 &
-"    autocmd BufWritePost *.less silent !make -C $TRTOP/site/css2/mobile >/dev/null 2>&1 &
-"  elseif expand("%:p") =~ 'site/\(js3\|css2\)/tablet'
-"    autocmd BufWritePost *.js silent !make -C $TRTOP/site/js3/tablet >/dev/null 2>&1  &
-"    autocmd BufWritePost *.css silent !make -C $TRTOP/site/css2/tablet >/dev/null 2>&1 &
-"    autocmd BufWritePost *.less silent !make -C $TRTOP/site/css2/tablet >/dev/null 2>&1 &
-"  else
-    autocmd BufWritePost *.js silent !make -C $TRTOP/site/js3 >/dev/null 2>&1  &
-    autocmd BufWritePost *.css silent !make -C $TRTOP/site/css2 >/dev/null 2>&1 &
-    autocmd BufWritePost *.less silent !make -C $TRTOP/site/css2 >/dev/null 2>&1 &
-"  endif
+  "Dispatch
+  autocmd FileType javascript let b:dispatch = 'echo "Making JS" && make -C $TRTOP/site/js3 >/dev/null'
+  autocmd FileType css let b:dispatch = 'echo "Making CSS" && make -C $TRTOP/site/css2 >/dev/null'
+  autocmd BufWritePost *.less,*.js Dispatch
 endif
 
 " -----------------------------------------------------------------------------------------------------------------
@@ -180,6 +157,10 @@ let g:multi_cursor_exit_from_insert_mode = 0  "<Esc> exits insert mode, not mult
 "   Allows other plugins to use . to repeat their functions
 "   https://github.com/tpope/vim-repeat
 
+" Dispatch
+"   Asynchronous auto building
+"   https://github.com/tpope/vim-dispatch.git
+
 " Improved ft
 "   Allows ft to work across multiple lines
 "   https://github.com/chrisbra/improvedft
@@ -212,34 +193,13 @@ colorscheme lucius    "Set colorscheme
 " Functions
 " -----------------------------------------------------------------------------------------------------------------
 
-"Asks for what commend to add
+"Asks for what comment to add
 "   Proceeds to add the input text to the start of every line from mark a to current line
 fun! AddComment()
   call inputsave()
   let output = input('Comment type:')
   call inputrestore()
   exec "'a,. s/^/".escape(output, '/')."/"
-endfun
-
-"Searches for a single character (used to mimic f/t across lines)
-"   Searches across lines but not past end of file
-"   back - searches backwards
-"   inclusive - goes right one character after search
-"   exclusive - goes left one character after search
-fun! FindChar(back, inclusive, exclusive)
-  let flag = 'W'
-  if a:back
-    let flag = 'Wb'
-  endif
-  let c = getchar()
-  if search('\V' . nr2char(c), flag)
-    if a:inclusive
-      norm! l
-    endif
-    if a:exclusive
-      norm! h
-    endif
-  endif
 endfun
 
 "Searches for the last search term used in terminal ack
