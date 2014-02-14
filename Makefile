@@ -8,7 +8,7 @@ all: .vim/autoload/pathogen.vim \
 
 .vim/bundle: .vim/autoload/pathogen.vim
 	mkdir -p .vim/bundle
-	grep "\"url:" ~/.vimrc | awk '{print $2}' | xargs -n1 git clone
+	cd .vim/bundle && grep '"url:' ~/.vimrc | awk '{print $$2}' | xargs -n1 git clone
 
 .vim/vimundo:
 	mkdir -p .vim/vimundo
