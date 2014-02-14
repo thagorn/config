@@ -140,51 +140,51 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Vitality
 "   Teachs iTerm2 and tmux to play well together
-"   https://github.com/sjl/vitality.vim
+"url:   https://github.com/sjl/vitality.vim
 let g:vitality_always_assume_iterm = 1 "Tells vitality I'm in iTerm2 even if ssh'd to another box
 
 " Vim Multiple Cursors
 "   Gives multi cursor support to vim (from Sublime text)
-"   https://github.com/terryma/vim-multiple-cursors
+"url:   https://github.com/terryma/vim-multiple-cursors
 let g:multi_cursor_exit_from_visual_mode = 0  "<Esc> exits visual mode, not multiple cursors
 let g:multi_cursor_exit_from_insert_mode = 0  "<Esc> exits insert mode, not multiple cursors
 
 " Vim Surround
 "   Creates a set of commands for manipulating surround characters (html tags, quotes, parens)
-"   https://github.com/tpope/vim-surround
+"url:   https://github.com/tpope/vim-surround
 
 " Vim Repeat
 "   Allows other plugins to use . to repeat their functions
-"   https://github.com/tpope/vim-repeat
+"url:   https://github.com/tpope/vim-repeat
 
 " Dispatch
 "   Asynchronous auto building
-"   https://github.com/tpope/vim-dispatch.git
+"url:   https://github.com/tpope/vim-dispatch.git
 
 " Improved ft
 "   Allows ft to work across multiple lines
-"   https://github.com/chrisbra/improvedft
+"url:   https://github.com/chrisbra/improvedft
 
 " Python Mode
 "   Adds linting, auto-folding etc to python files
-"   https://github.com/klen/python-mode
+"url:   https://github.com/klen/python-mode
 let g:pymode_lint_checker = "pyflakes,mccabe"   "Python linters to run
 let g:pymode_folding = 1                        "Enable python folding
 
 " Velocity
 "   Gives velocity syntax support to vim
-"   https://github.com/lepture/vim-velocity
+"url:   https://github.com/lepture/vim-velocity
 autocmd BufRead,BufNewFile *.vm,*.html,*.htm,*.shtml set filetype=velocity  "Maybe necessary?
 hi link velocityVar Special                                                 "Prefer this coloring for vars
 
 " Dustjs
 "   Gives dust syntax support to vim
-"   https://github.com/jimmyhchan/dustjs.vim
+"url:   https://github.com/jimmyhchan/dustjs.vim
 let g:surround_{char2nr('d')} = "{\r}"    "Add {} as surround characters for Vim Surround
 
 " Lucius 
 "   Colorscheme
-"   https://github.com/jonathanfilip/vim-lucius
+"url:   https://github.com/jonathanfilip/vim-lucius
 set t_Co=256          "Tell vim I have access to 256 colors
 set background=light  "Tell vim I'm using a light background
 colorscheme lucius    "Set colorscheme
