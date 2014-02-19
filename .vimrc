@@ -106,7 +106,7 @@ imap <right> <nop>
 " Filetype specific settings
 " -----------------------------------------------------------------------------------------------------------------
 "Syntax
-autocmd BufRead,BufNewFile *.less set filetype=css    "Pretend less files are css
+"autocmd BufRead,BufNewFile *.less set filetype=css    "Pretend less files are css
 autocmd BufRead,BufNewFile *.salsa set filetype=java  "Pretend salsa files are java
 let html_no_rendering=1                               "Don't underline text between <a> tags, etc
 
@@ -120,7 +120,7 @@ if $TRTOP != ""
   autocmd BufWritePost *.dust silent !$TRTOP/scripts/tweak flush dust >/dev/null 2>&1 &
   "Dispatch
   autocmd FileType javascript let b:dispatch = 'echo "Making JS" && make -C $TRTOP/site/js3 >/dev/null'
-  autocmd FileType css let b:dispatch = 'echo "Making CSS" && make -C $TRTOP/site/css2 >/dev/null'
+  autocmd FileType less let b:dispatch = 'echo "Making CSS" && make -C $TRTOP/site/css2 >/dev/null'
   autocmd BufWritePost *.less,*.js Dispatch
 endif
 
@@ -181,6 +181,10 @@ hi link velocityVar Special                                                 "Pre
 "   Gives dust syntax support to vim
 "url:   https://github.com/jimmyhchan/dustjs.vim
 let g:surround_{char2nr('d')} = "{\r}"    "Add {} as surround characters for Vim Surround
+
+" Vim-less
+"   Gives less syntax support to vim
+"url:   https://github.com/groenewege/vim-less.git
 
 " Lucius 
 "   Colorscheme

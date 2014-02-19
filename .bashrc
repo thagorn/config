@@ -53,6 +53,13 @@ PS1="\n$PS1_LN1\n$PS1_LN2"
 #Tripadvisor specific stuff
 export SVN_EDITOR=/usr/bin/vim
 
+function tl()
+{
+    cd $TRTOP
+    ant compile-tr merge-classes
+    cd -
+}
+
 function findtrtop {
     candidate=`pwd`
     while true; do
