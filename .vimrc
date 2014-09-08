@@ -117,11 +117,12 @@ autocmd FileType make set noet                              "Make files expect <
 "Auto make when writing
 if $TRTOP != ""
   autocmd BufWritePost *.vm silent !$TRTOP/scripts/tweak flush velocity >/dev/null 2>&1 &
-  autocmd BufWritePost *.dust silent !$TRTOP/scripts/tweak flush dust >/dev/null 2>&1 &
+  "autocmd BufWritePost *.dust silent !$TRTOP/scripts/tweak flush dust >/dev/null 2>&1 &
   "Dispatch
-  autocmd FileType javascript let b:dispatch = 'echo "Making JS" && make -C $TRTOP/site/js3 >/dev/null'
+  autocmd FileType javascript let b:dispatch = 'echo "Making JS" && make -C $TRTOP/site/js3'
   autocmd FileType less let b:dispatch = 'echo "Making CSS" && make -C $TRTOP/site/css2 >/dev/null'
-  autocmd BufWritePost *.less,*.js Dispatch
+  autocmd FileType dustjs let b:dispatch = 'echo "Making DUST" && make -C $TRTOP/site/dust clean >/dev/null && make -C $TRTOP/site/dust && tweak flush dust >/dev/null 2>&1'
+  autocmd BufWritePost *.less,*.js,*.dust Dispatch
 endif
 
 " -----------------------------------------------------------------------------------------------------------------
@@ -168,8 +169,9 @@ let g:multi_cursor_exit_from_insert_mode = 0  "<Esc> exits insert mode, not mult
 " Python Mode
 "   Adds linting, auto-folding etc to python files
 "url:   https://github.com/klen/python-mode
-let g:pymode_lint_checker = "pyflakes,mccabe"   "Python linters to run
-let g:pymode_folding = 1                        "Enable python folding
+let g:pymode_lint_checkers = ["pyflakes","mccabe"]  "Python linters to run
+let g:pymode_folding = 1                            "Enable python folding
+let g:pymode_rope = 0                               "Disable rope
 
 " Velocity
 "   Gives velocity syntax support to vim
