@@ -88,8 +88,9 @@ nnoremap <silent> <space> zz:set cursorline! cursorcolumn!<cr>
 "Double // will search for the last term used in Ack search (requires a bash function in ~/.bashrc)
 nnoremap <silent> // :call AckSearchTerm()<cr>n
 
-"Copy/Paste across vim sessions
+"Cut/Copy/Paste across vim sessions
 map <leader>y "fy:new ~/.vim/.paste<cr>:%d<cr>:$put f<cr>:x<cr>
+map <leader>d "fd:new ~/.vim/.paste<cr>:%d<cr>:$put f<cr>:x<cr>
 map <leader>p :r ~/.vim/.paste<cr>
 
 "Disable arrow keys
