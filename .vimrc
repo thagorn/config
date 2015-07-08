@@ -89,9 +89,11 @@ nnoremap <silent> <space> zz:set cursorline! cursorcolumn!<cr>
 nnoremap <silent> // :call AckSearchTerm()<cr>n
 
 "Cut/Copy/Paste across vim sessions
-map <leader>y "fy:new ~/.vim/.paste<cr>:%d<cr>:$put f<cr>:x<cr>
-map <leader>d "fd:new ~/.vim/.paste<cr>:%d<cr>:$put f<cr>:x<cr>
-map <leader>p :r ~/.vim/.paste<cr>
+nmap <leader>y y:call CrossYank()<cr>
+nmap <leader>d d:call CrossYank()<cr>
+nmap <leader>p :call CrossPaste("p")<cr>
+nmap <leader>P :call CrossPaste("P")<cr>
+vmap <leader>p d:call CrossPaste("P")<cr>
 
 "Disable arrow keys
 map <up> <nop>
@@ -120,7 +122,7 @@ if $TRTOP != ""
   autocmd BufWritePost *.vm silent !$TRTOP/scripts/tweak flush velocity >/dev/null 2>&1 &
   "autocmd BufWritePost *.dust silent !$TRTOP/scripts/tweak flush dust >/dev/null 2>&1 &
   "Dispatch
-  autocmd FileType javascript let b:dispatch = 'echo "Making JS" && make -C $TRTOP/site/js3'
+  autocmd FileType javascript let b:dispatch = 'echo "Making JS" && cd $TRTOP && ./gradlew site:js3:assemble'
   autocmd FileType less let b:dispatch = 'echo "Making CSS" && make -C $TRTOP/site/css2 >/dev/null'
   autocmd FileType dustjs let b:dispatch = 'echo "Making DUST" && make -C $TRTOP/site/dust clean >/dev/null && make -C $TRTOP/site/dust && tweak flush dust >/dev/null 2>&1'
   autocmd BufWritePost *.less,*.js,*.dust Dispatch
@@ -216,4 +218,31 @@ fun! AckSearchTerm()
   let output = system(shellcmd)
   let output = substitute(output, '\n$', '', '')
   exe 'let @/ ="'.output.'"'
+endfun
+
+"Allows for yanking into a file
+"  Puts register 0 into ~/.vim/.paste
+"  Puts the current register type (line, character, block) into ~/.vim/.pastetype
+fun! CrossYank()
+  let @g = getregtype()
+  new ~/.vim/.paste
+  %d
+  $put 0
+  0d
+  x
+  new ~/.vim/.pastetype
+  %d
+  $put g
+  0d
+  x
+endfun
+
+"Allows for pasting from a file
+"  Pastes using pastecmd (p or P) the contents of ~/.vim/.paste
+"  Uses the register type (character, line, block) from ~/.vim/.pastetype
+fun! CrossPaste(pastecmd)
+  :let @f = join(readfile(glob("~/.vim/.paste")), "\n")
+  let regtype = system('cat ~/.vim/.pastetype')
+  call setreg("f", getreg("f"), regtype)
+  exe 'normal "f'.a:pastecmd
 endfun
