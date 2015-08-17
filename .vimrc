@@ -28,7 +28,7 @@ set autoindent      "Maintain level of indent currently at
 set smartindent     "Guess when to create a deeper indent
 
 "Folding
-set foldmethod=syntax "Create folds based on code syntax
+"set foldmethod=syntax "Create folds based on code syntax
 
 "Line numbers
 set number          "Show dark grey line numbers
@@ -106,6 +106,12 @@ imap <left> <nop>
 imap <right> <nop>
 
 " -----------------------------------------------------------------------------------------------------------------
+" Tag jumping
+" -----------------------------------------------------------------------------------------------------------------
+nmap <F3> g<C-]>
+nmap <F2> <C-W>g}
+
+" -----------------------------------------------------------------------------------------------------------------
 " Filetype specific settings
 " -----------------------------------------------------------------------------------------------------------------
 "Syntax
@@ -122,10 +128,11 @@ if $TRTOP != ""
   autocmd BufWritePost *.vm silent !$TRTOP/scripts/tweak flush velocity >/dev/null 2>&1 &
   "autocmd BufWritePost *.dust silent !$TRTOP/scripts/tweak flush dust >/dev/null 2>&1 &
   "Dispatch
-  autocmd FileType javascript let b:dispatch = 'echo "Making JS" && cd $TRTOP && ./gradlew site:js3:assemble'
+  autocmd FileType javascript let b:dispatch = 'echo "Making JS" && cd $TRTOP && ./gradlew site:js3:assemble >/dev/null'
+  autocmd FileType css let b:dispatch = 'echo "Making CSS" && cd $TRTOP && ./gradlew site:css2:assemble >/dev/null'
   autocmd FileType less let b:dispatch = 'echo "Making CSS" && make -C $TRTOP/site/css2 >/dev/null'
   autocmd FileType dustjs let b:dispatch = 'echo "Making DUST" && make -C $TRTOP/site/dust clean >/dev/null && make -C $TRTOP/site/dust && tweak flush dust >/dev/null 2>&1'
-  autocmd BufWritePost *.less,*.js,*.dust Dispatch
+  autocmd BufWritePost *.less,*.js,*.dust,*.css Dispatch
 endif
 
 " -----------------------------------------------------------------------------------------------------------------

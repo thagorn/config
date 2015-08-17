@@ -1,0 +1,8 @@
+--langdef=Velocity
+--langmap=Velocity:.vm
+--regex-Velocity=/^[ \t]*#macro[ \t]*\([ \t]*([a-zA-Z0-9_]+).*/\1/m,macro,macro definition/
+--recurse
+--exclude=@/root/.ctagsignore
+--totals=yes
+#--sort=foldcase
+#--append=yes

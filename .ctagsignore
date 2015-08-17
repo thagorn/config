@@ -1,0 +1,5 @@
+*-c.js
+*-gen.js
+*.min.js
+*.sql
+.svn
