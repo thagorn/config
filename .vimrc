@@ -89,8 +89,8 @@ nnoremap <silent> <space> zz:set cursorline! cursorcolumn!<cr>
 nnoremap <silent> // :call AckSearchTerm()<cr>n
 
 "Cut/Copy/Paste across vim sessions
-nmap <leader>y y:call CrossYank()<cr>
-nmap <leader>d d:call CrossYank()<cr>
+vmap <leader>y y:call CrossYank()<cr>
+vmap <leader>d d:call CrossYank()<cr>
 nmap <leader>p :call CrossPaste("p")<cr>
 nmap <leader>P :call CrossPaste("P")<cr>
 vmap <leader>p d:call CrossPaste("P")<cr>
@@ -116,6 +116,7 @@ nmap <F2> <C-W>g}
 " -----------------------------------------------------------------------------------------------------------------
 "Syntax
 "autocmd BufRead,BufNewFile *.less set filetype=css    "Pretend less files are css
+autocmd BufRead,BufNewFile *.hql set filetype=sql     "Pretend hive query files are sql
 autocmd BufRead,BufNewFile *.salsa set filetype=java  "Pretend salsa files are java
 let html_no_rendering=1                               "Don't underline text between <a> tags, etc
 
@@ -130,7 +131,7 @@ if $TRTOP != ""
   "Dispatch
   autocmd FileType javascript let b:dispatch = 'echo "Making JS" && cd $TRTOP && ./gradlew site:js3:assemble >/dev/null'
   autocmd FileType css let b:dispatch = 'echo "Making CSS" && cd $TRTOP && ./gradlew site:css2:assemble >/dev/null'
-  autocmd FileType less let b:dispatch = 'echo "Making CSS" && make -C $TRTOP/site/css2 >/dev/null'
+  autocmd FileType less let b:dispatch = 'echo "Making CSS" && cd $TRTOP && ./gradlew site:css2:assemble >/dev/null'
   autocmd FileType dustjs let b:dispatch = 'echo "Making DUST" && make -C $TRTOP/site/dust clean >/dev/null && make -C $TRTOP/site/dust && tweak flush dust >/dev/null 2>&1'
   autocmd BufWritePost *.less,*.js,*.dust,*.css Dispatch
 endif

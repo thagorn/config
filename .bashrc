@@ -12,9 +12,11 @@ alias ls="ls -aFG --color"
 alias make="make -s"
 #Edit svn ignore settings
 alias svnignore="svn propedit svn:ignore ."
+alias tm="psql -h tripmonster -U tripmonster"
 #Make vim the default editor
 export EDITOR=vim
 export LC_ALL="en_US.utf8"
+export LANG="en_US.UTF-8"
 
 export JAVA_HOME=/usr/lib/jvm/java-8-oracle/
 export PATH=$PATH:$JAVA_HOME/bin 
@@ -83,8 +85,8 @@ function vlink {
 export -f vlink
 
 #Warehouse stuff:
-if [ -n "$PS1" -a -f /home/site/warehouse-ng/warehouse.bash.env ]; then
-    source /home/site/warehouse-ng/warehouse.bash.env
+if [ -n "$PS1" -a -f /home/site/warehouse/warehouse.bash.env ]; then
+    source /home/site/warehouse/warehouse.bash.env
     alias hive="hive -hiveconf mapred.job.queue.name=rna"
 fi
 
