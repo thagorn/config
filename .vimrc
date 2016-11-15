@@ -206,6 +206,14 @@ set t_Co=256          "Tell vim I have access to 256 colors
 set background=light  "Tell vim I'm using a light background
 colorscheme lucius    "Set colorscheme
 
+" Vim-javascript
+"   Improves javascript syntax support for vim
+"url:   https://github.com/pangloss/vim-javascript.git
+
+" Vim-jsx
+"   Gives jsx syntax support to vim
+"url:   https://github.com/mxw/vim-jsx.git
+
 " -----------------------------------------------------------------------------------------------------------------
 " Functions
 " -----------------------------------------------------------------------------------------------------------------
