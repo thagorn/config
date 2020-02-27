@@ -240,15 +240,16 @@ endfun
 "  Puts register 0 into ~/.vim/.paste
 "  Puts the current register type (line, character, block) into ~/.vim/.pastetype
 fun! CrossYank()
-  let @g = getregtype()
+  let @g = getreg('')
+  let @h = getregtype()
   new ~/.vim/.paste
   %d
-  $put 0
+  $put g
   0d
   x
   new ~/.vim/.pastetype
   %d
-  $put g
+  $put h
   0d
   x
 endfun
