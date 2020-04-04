@@ -118,22 +118,24 @@ nmap <F2> <C-W>g}
 "autocmd BufRead,BufNewFile *.less set filetype=css    "Pretend less files are css
 autocmd BufRead,BufNewFile *.hql set filetype=sql     "Pretend hive query files are sql
 autocmd BufRead,BufNewFile *.salsa set filetype=java  "Pretend salsa files are java
+autocmd BufRead,BufNewFile *.swagger set filetype=swagger "Set filetype of swagger files
 let html_no_rendering=1                               "Don't underline text between <a> tags, etc
 
 "Tabbing
-autocmd FileType velocity,vim,dustjs set ts=2 sw=2 sts=2    "Velocity/vim/dust files have 2 space tabs
-autocmd FileType make set noet                              "Make files expect <Tab> characters not spaces
+autocmd FileType velocity,vim,dustjs,javascript.jsx,less,swagger set ts=2 sw=2 sts=2  "Velocity/vim/dust/jsx files have 2 space tabs
+autocmd FileType make set noet                                                "Make files expect <Tab> characters not spaces
 
 "Auto make when writing
 if $TRTOP != ""
   autocmd BufWritePost *.vm silent !$TRTOP/scripts/tweak flush velocity >/dev/null 2>&1 &
   "autocmd BufWritePost *.dust silent !$TRTOP/scripts/tweak flush dust >/dev/null 2>&1 &
   "Dispatch
-  autocmd FileType javascript let b:dispatch = 'echo "Making JS" && cd $TRTOP && ./gradlew site:js3:assemble >/dev/null'
-  autocmd FileType css let b:dispatch = 'echo "Making CSS" && cd $TRTOP && ./gradlew site:css2:assemble >/dev/null'
-  autocmd FileType less let b:dispatch = 'echo "Making CSS" && cd $TRTOP && ./gradlew site:css2:assemble >/dev/null'
-  autocmd FileType dustjs let b:dispatch = 'echo "Making DUST" && make -C $TRTOP/site/dust clean >/dev/null && make -C $TRTOP/site/dust && tweak flush dust >/dev/null 2>&1'
-  autocmd BufWritePost *.less,*.js,*.dust,*.css Dispatch
+  "autocmd FileType javascript let b:dispatch = 'echo "Making JS" && cd $TRTOP && ./gradlew site:js3:assemble >/dev/null'
+  "autocmd FileType css let b:dispatch = 'echo "Making CSS" && cd $TRTOP && ./gradlew site:css2:assemble >/dev/null'
+  "autocmd FileType less let b:dispatch = 'echo "Making CSS" && cd $TRTOP && ./gradlew site:css2:assemble >/dev/null'
+  "autocmd FileType dustjs let b:dispatch = 'echo "Making DUST" && make -C $TRTOP/site/dust clean >/dev/null && make -C $TRTOP/site/dust && tweak flush dust >/dev/null 2>&1'
+  "autocmd FileType javascript.jsx let b:dispatch = 'echo "Making JSX" && cd $TRTOP && gw -a site:js3:jsx:assemble >/dev/null'
+  "autocmd BufWritePost *.css,*.jsx Dispatch
 endif
 
 " -----------------------------------------------------------------------------------------------------------------
@@ -209,6 +211,7 @@ colorscheme lucius    "Set colorscheme
 " Vim-javascript
 "   Improves javascript syntax support for vim
 "url:   https://github.com/pangloss/vim-javascript.git
+let g:javascript_plugin_flow = 1  "Enable flow syntax highlighting
 
 " Vim-jsx
 "   Gives jsx syntax support to vim
@@ -230,7 +233,7 @@ endfun
 "Searches for the last search term used in terminal ack
 "   Requires matching functon in ~/.bashrc
 fun! AckSearchTerm()
-  let shellcmd = "cat ~/.vim/acksearch"
+  let shellcmd = "cat ~/.vim/agsearch"
   let output = system(shellcmd)
   let output = substitute(output, '\n$', '', '')
   exe 'let @/ ="'.output.'"'

@@ -13,19 +13,26 @@ alias make="make -s"
 #Edit svn ignore settings
 alias svnignore="svn propedit svn:ignore ."
 alias tm="psql -h tripmonster -U tripmonster"
+alias jst="tweak feature off js_compress && tweak feature off js_concat"
+alias jstt="tweak feature on js_compress && tweak feature on js_concat"
+alias remountprodfbrs='sudo umount /usr/local/tripadvisor/prod_fbrs ; sudo mount -t nfs -o ro fbrs-storage:/backup/fbrs/LATEST_PRODUCTION /usr/local/tripadvisor/prod_fbrs'
 #Make vim the default editor
+alias vi=vim
 export EDITOR=vim
 export LC_ALL="en_US.utf8"
 export LANG="en_US.UTF-8"
 
-export JAVA_HOME=/usr/lib/jvm/java-8-oracle/
+export JAVA_HOME=/usr/jdk11
 export PATH=$PATH:$JAVA_HOME/bin 
-export PATH=$PATH:/home/site/scripts
+export PATH=$PATH:/home/awhitworth/scripts
 
 export FIGNORE=.svn
 
 if [ "$TRTOP" = "" ] ; then
     export TRTOP="/home/site/trsrc-MAINLINE"
+fi
+if [ "$SSL_PLATFORM" = "" ]; then
+ export SSL_PLATFORM="/home/site/ssl-platform"
 fi
 
 #TMUX config
@@ -43,18 +50,26 @@ function connect-rio {
     psql -h $1.cta9rlboj2sy.us-east-1.redshift.amazonaws.com -p 5439 -U $username $1
 }
 
-function ack {
+function ag {
    for arg in $*; do
        if [[ "$arg" != "-"* ]]; then
-           echo $arg | sed 's/"/\\"/g' > ~/.vim/acksearch
+           echo $arg | sed 's/"/\\"/g' > ~/.vim/agsearch
            break
        fi  
    done
-   /usr/bin/env ack-grep "$@"
+   /usr/bin/env ag "$@"
 }
 
 function v {
     $@ | vim -R -
+}
+
+function comp {
+    if [[ "$1" == "check" ]]; then
+        /usr/bin/env comp "$@" && printf '\033[0;32mSuccess!\033[0m\n'
+    else
+        /usr/bin/env comp "$@"
+    fi
 }
 
 function c {
@@ -87,7 +102,7 @@ export -f vlink
 #Warehouse stuff:
 if [ -n "$PS1" -a -f /home/site/warehouse/warehouse.bash.env ]; then
     source /home/site/warehouse/warehouse.bash.env
-    alias hive="hive -hiveconf mapred.job.queue.name=rna"
+    alias hive="hive -hiveconf mapred.job.queue.name=eat.adhoc"
 fi
 
 #Set up command line
@@ -96,7 +111,7 @@ HOST_COLOR="`EXT_COLOR 28`"     #Green
 #HOST_COLOR="`EXT_COLOR 160`"    #Red
 DIR_COLOR="`EXT_COLOR 18`"      #Blue
 BLCK="`EXT_COLOR 0`"            #Black 
-PS1_LN1="[${HOST_COLOR}\u@\h${BLCK}:${DIR_COLOR}\w${BLCK}]"
+PS1_LN1="\[${HOST_COLOR}\u@\h${BLCK}:${DIR_COLOR}\w${BLCK}\]"
 PS1_LN2="\D{%T} \W\$ "
 PS1="\n$PS1_LN1\n$PS1_LN2"
 
