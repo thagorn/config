@@ -1,6 +1,6 @@
 #bashrc file
 #location: $HOME/.bashrc or ~/.bashrc
-#last modified: 1/18/13
+#last modified: 10/05/22
 
 ### Aliases ###
 #Make commands interactive
