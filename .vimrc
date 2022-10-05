@@ -213,6 +213,11 @@ colorscheme lucius    "Set colorscheme
 "url:   https://github.com/pangloss/vim-javascript.git
 let g:javascript_plugin_flow = 1  "Enable flow syntax highlighting
 
+
+" typescript-vim
+"   Typescript syntax support for vim
+"url:   https://github.com/leafgarland/typescript-vim.git
+
 " Vim-jsx
 "   Gives jsx syntax support to vim
 "url:   https://github.com/mxw/vim-jsx.git
